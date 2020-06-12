@@ -8,7 +8,7 @@ module.exports = {
                 res.redirect('/');
             }
             res.render('index.ejs', {      // Renderiza lo que se encuentra en este archivo
-                title: "Bienvenido al taller | Agregar un empleado"
+                title: "Welcome to my program | Add route"
                 ,routes: result
             });
         });

@@ -3,7 +3,7 @@ const fs = require('fs');
 module.exports = {
     addRoutePage: (req, res) => {
         res.render('add-route.ejs', {
-            title: "Bienvenido al taller | Agregar un empleado"
+            title: "Welcome to my program | Add route"
             ,message: ''
         });
     },
@@ -24,10 +24,10 @@ module.exports = {
                 return res.status(500).send(err);
             }
             if (result.length > 0) {
-                message = 'El empleado ya existe';
+                message = 'The route already exists';
                 res.render('add-route.ejs', {
                     message,
-                    title: "Bienvenido al taller | Agregar un empleado"
+                    title: "Welcome to my program | Add route"
                 });
             } else {
                 // check the filetype before uploading it

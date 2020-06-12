@@ -1,15 +1,29 @@
-// Variables globales
+// These are the global variables
+
+// The express library
 const express = require('express');
+// The upload library
 const fileUpload = require('express-fileupload');
+// The parser library
 const bodyParser = require('body-parser');
+// The sql library
 const mysql = require('mysql');
+// The system path library
 const path = require('path');
+
+// We create a new variable with the express library
 const app = express();
+
+// We add the index
 const {getHomePage} = require('./routes/index');
+
+// We add the rodes with the corresponding ejs
 const {addRoutePage, addRoute, deleteRoute, addLocation, addLocationPage, showRoute} = require('./routes/rode');
+
+// The port to use is 5000
 const port = 5000;
 
-// Crea la conexion de la base de datos
+// It creates the database with the credentials
 const db = mysql.createConnection ({
     host: 'localhost',
     user: 'root',
@@ -17,27 +31,27 @@ const db = mysql.createConnection ({
     database: 'login'
 });
 
-// Se conecta a la base de datos
+// Now we connect to the database
 db.connect((err) => {
     if (err) {
         throw err;
     }
     console.log('Connected to database');
 });
+
+
 global.db = db;
 
-// configuracion del middleware
-app.set('port', process.env.port || port); // se configura express para que escuche este puerto
-app.set('views', __dirname + '/views'); // setea exprees para que apunte a este directorio para todas sus vistas
-app.set('view engine', 'ejs'); // configura el sistema de los templates
-app.use(express.static(path.join(__dirname,'public')));
+// configure the middleware
+app.set('port', process.env.port || port); // we configure express to listen into the port
+app.set('views', __dirname + '/views'); // we configure all the views for the project
+app.set('view engine', 'ejs'); // now we configure all the templates
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json()); // parsea los datos de los json 
-app.use(express.static(path.join(__dirname, 'public'))); // configura express para que use la carpeta public (que sirve para almacenar imagenes)
-app.use(fileUpload()); // configura el sistema para que suba carpetas
+app.use(bodyParser.json()); // This is needed to parse
+app.use(express.static(path.join(__dirname, 'public'))); // configures the public to be used to save images
+app.use(fileUpload()); // This line is needed to upload files
 
-// Las rutas de la pagina
-
+// The routes of the page with each ejs
 app.get('/', getHomePage);
 app.get('/add', addRoutePage);
 app.get('/addLocation/:id', addLocationPage);
@@ -47,7 +61,7 @@ app.post('/add', addRoute);
 app.post('/addLocation/:id', addLocation);
 
 
-// Se configura el puerto
+// Now we need to set the port
 app.listen(port, () => {
     console.log(`Server running on port: ${port}`);
 });
